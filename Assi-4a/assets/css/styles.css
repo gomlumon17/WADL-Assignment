@@ -1,0 +1,258 @@
+:root {
+    --bg-base: #f2f8f3;
+    --bg-soft: #e6efe8;
+    --surface: #ffffff;
+    --surface-alt: #f7fbf8;
+    --text: #14281d;
+    --muted: #51615a;
+    --brand: #2d6a4f;
+    --brand-strong: #1b4332;
+    --highlight: #f4a261;
+    --line: #d8e5db;
+    --shadow: 0 14px 34px rgba(20, 40, 29, 0.12);
+}
+
+body,
+.ui-page {
+    font-family: "Outfit", sans-serif;
+    background:
+        radial-gradient(circle at 8% 10%, rgba(244, 162, 97, 0.18), transparent 34%),
+        radial-gradient(circle at 90% 82%, rgba(45, 106, 79, 0.14), transparent 38%),
+        linear-gradient(170deg, var(--bg-base), var(--bg-soft));
+    color: var(--text);
+}
+
+h1,
+h2,
+h3,
+.site-footer h4 {
+    font-family: "Merriweather", serif;
+}
+
+.site-header {
+    background: linear-gradient(130deg, var(--brand-strong), var(--brand));
+    border: 0;
+    box-shadow: 0 8px 22px rgba(27, 67, 50, 0.36);
+}
+
+.site-header .ui-title {
+    margin: 0.9em 18% 0.8em;
+    color: #f4fff7;
+    letter-spacing: 0.01em;
+}
+
+.site-header .ui-btn-right {
+    margin-top: 0.48rem;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.38) !important;
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+.site-navbar {
+    padding: 0.35rem 0.55rem 0.55rem;
+}
+
+.site-navbar .ui-btn {
+    font-size: 0.86rem;
+    font-weight: 600;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #f4fff7 !important;
+    text-shadow: none !important;
+}
+
+.site-navbar .ui-btn-active {
+    background: #f4a261 !important;
+    border-color: #f4a261 !important;
+    color: #1f2b25 !important;
+    box-shadow: 0 6px 14px rgba(244, 162, 97, 0.4);
+}
+
+.ui-content {
+    padding: 1.1rem;
+}
+
+.hero-card {
+    background: linear-gradient(145deg, var(--surface), #eef7f0);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 1.2rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--shadow);
+    animation: riseIn 520ms ease-out;
+}
+
+.hero-card.compact {
+    margin-bottom: 0.9rem;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.hero-card h2 {
+    margin: 0.45rem 0 0.42rem;
+    color: #112319;
+}
+
+.hero-card p {
+    color: var(--muted);
+    line-height: 1.52;
+}
+
+.section-title {
+    margin: 0.35rem 0 0.9rem;
+    color: #12261b;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.72rem;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+    border: 1px solid #d7e6db;
+    box-shadow: 0 8px 16px rgba(13, 27, 20, 0.13);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.gallery-grid img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(13, 27, 20, 0.18);
+}
+
+.feature-panel {
+    margin-top: 1.1rem;
+}
+
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.1rem;
+    box-shadow: var(--shadow);
+    animation: riseIn 520ms ease-out;
+}
+
+.form-card label {
+    color: #1a3125;
+    font-weight: 600;
+}
+
+.form-card .ui-input-text,
+.form-card .ui-select,
+.form-card .ui-controlgroup {
+    border-radius: 12px !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: none !important;
+    background: var(--surface-alt) !important;
+}
+
+.form-card input {
+    font-family: "Outfit", sans-serif;
+}
+
+.form-card .ui-controlgroup-label legend {
+    color: #223b2e;
+    font-weight: 700;
+}
+
+.success-popup {
+    max-width: 340px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.ui-btn,
+.ui-page-theme-a .ui-btn,
+html .ui-bar-a .ui-btn,
+html .ui-body-a .ui-btn {
+    background: linear-gradient(145deg, #3d8b68, var(--brand)) !important;
+    border: 1px solid #2f7557 !important;
+    color: #f3fff8 !important;
+    text-shadow: none !important;
+    box-shadow: 0 7px 16px rgba(34, 83, 62, 0.28);
+}
+
+.ui-btn:hover,
+.ui-page-theme-a .ui-btn:hover,
+html .ui-bar-a .ui-btn:hover,
+html .ui-body-a .ui-btn:hover {
+    background: linear-gradient(145deg, #4a9f78, #2f7759) !important;
+}
+
+.ui-page-theme-a .ui-btn.ui-btn-b,
+html .ui-bar-a .ui-btn.ui-btn-b,
+html .ui-body-a .ui-btn.ui-btn-b {
+    background: linear-gradient(145deg, #f4a261, #e08f4d) !important;
+    border-color: #d4813f !important;
+    color: #262018 !important;
+    box-shadow: 0 8px 18px rgba(224, 143, 77, 0.3);
+}
+
+.ui-listview > li {
+    background: var(--surface) !important;
+    border-color: var(--line) !important;
+}
+
+.ui-collapsible-inset,
+.ui-collapsible-set {
+    border: 0 !important;
+}
+
+.ui-collapsible-content {
+    border-color: var(--line) !important;
+    background: var(--surface) !important;
+}
+
+.site-footer {
+    background: #12261b;
+    border: 0;
+    box-shadow: 0 -6px 18px rgba(14, 30, 21, 0.32);
+}
+
+.site-footer h4 {
+    font-size: 0.85rem;
+    margin: 0.8em;
+    color: #ebfff2;
+}
+
+@keyframes riseIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 760px) {
+    .ui-content {
+        max-width: 940px;
+        margin: 0 auto;
+        padding: 1.4rem 1.2rem 1.6rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+    }
+
+    .hero-card,
+    .form-card {
+        padding: 1.35rem;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | TrailBlaze Club</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+    <div data-role="page" id="register-page" class="site-page" data-theme="a">
+        <div data-role="header" data-position="fixed" class="site-header">
+            <h1>TrailBlaze Club</h1>
+            <div data-role="navbar" class="site-navbar">
+                <ul>
+                    <li><a href="index.html" data-transition="slide" data-direction="reverse">Home</a></li>
+                    <li><a href="about.html" data-transition="slide">About</a></li>
+                    <li><a href="register.html" class="ui-btn-active ui-state-persist" data-transition="fade">Register</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <section class="hero-card compact">
+                <p class="eyebrow">Adventure Signup</p>
+                <h2>Reserve Your Spot For The Next Trail</h2>
+            </section>
+
+            <form id="newsletter-form" class="form-card">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+
+                <fieldset data-role="controlgroup">
+                    <legend>Interests (Checkbox Widget)</legend>
+                    <input type="checkbox" name="interest-nature" id="interest-nature">
+                    <label for="interest-nature">Mountain Hiking</label>
+
+                    <input type="checkbox" name="interest-urban" id="interest-urban">
+                    <label for="interest-urban">Cycling Tours</label>
+
+                    <input type="checkbox" name="interest-portraits" id="interest-portraits">
+                    <label for="interest-portraits">Camping Nights</label>
+                </fieldset>
+
+                <fieldset data-role="controlgroup">
+                    <legend>Trip Update Frequency (Radio Widget)</legend>
+                    <input type="radio" name="frequency" id="daily" value="Daily" checked>
+                    <label for="daily">Daily</label>
+
+                    <input type="radio" name="frequency" id="weekly" value="Weekly">
+                    <label for="weekly">Weekly</label>
+
+                    <input type="radio" name="frequency" id="monthly" value="Monthly">
+                    <label for="monthly">Monthly</label>
+                </fieldset>
+
+                <button type="submit" class="ui-btn ui-btn-b ui-corner-all ui-shadow">Join Club</button>
+            </form>
+
+            <div data-role="popup" id="success-popup" data-overlay-theme="b" data-theme="a" data-dismissible="true" class="success-popup">
+                <div role="main" class="ui-content">
+                    <h3>Signup Completed</h3>
+                    <p>Welcome to TrailBlaze Club. You will receive updates about upcoming adventures.</p>
+                    <a href="index.html" class="ui-btn ui-corner-all ui-btn-b" data-rel="back">Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" class="site-footer">
+            <h4>WAD - Query Mobile Assignment | <span id="year-register"></span></h4>
+        </div>
+    </div>
+</body>
+</html>

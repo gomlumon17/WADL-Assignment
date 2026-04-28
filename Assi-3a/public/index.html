@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static Server Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">StaticServer</a>
+        <nav class="nav-links">
+          <a href="#overview">Overview</a>
+          <a href="#modules">Modules</a>
+          <a href="#repo">Repository</a>
+        </nav>
+        <button class="btn">Sign in</button>
+      </div>
+    </header>
+
+    <main class="page" id="overview">
+      <section class="hero card">
+        <p class="label">Self-hosted demo</p>
+        <h1>Node.js Static Website Server</h1>
+        <p>
+          This website is served from your own Node.js application using native
+          modules for networking and file handling.
+        </p>
+        <!-- <div class="actions">
+          <a class="btn primary" href="#repo">View Details</a>
+          <a class="btn ghost" href="#modules">See Modules</a>
+        </div> -->
+      </section>
+
+      <section class="grid" id="modules">
+        <article class="card mini">
+          <h2>http</h2>
+          <p>
+            Creates the web server and handles incoming requests and responses.
+          </p>
+        </article>
+        <article class="card mini">
+          <h2>url</h2>
+          <p>
+            Parses request URLs so routing and file mapping stay clear and safe.
+          </p>
+        </article>
+        <article class="card mini">
+          <h2>fs + path</h2>
+          <p>
+            Reads files from disk and resolves valid paths for static assets.
+          </p>
+        </article>
+      </section>
+
+      <section class="card files" id="repo">
+        <div class="repo-head">
+          <h2>File Manager</h2>
+          <span class="badge">Uploads</span>
+        </div>
+        <p class="muted">
+          Upload files, then download or delete them from the server.
+        </p>
+
+        <div class="upload-row">
+          <input id="filePicker" type="file" />
+          <button class="btn primary" id="uploadBtn" type="button">
+            Upload
+          </button>
+        </div>
+
+        <p id="statusText" class="muted status"></p>
+
+        <ul id="fileList" class="file-list"></ul>
+      </section>
+
+      <!-- <section class="card repo" id="repo">
+        <div class="repo-head">
+          <h2>static-server / main</h2>
+          <span class="badge">Public</span>
+        </div>
+        <p class="muted">
+          A lightweight static server project with secure file serving and clean
+          structure.
+        </p>
+        <div class="meta">
+          <span>JavaScript</span>
+          <span>MIT License</span>
+          <span>Updated today</span>
+        </div>
+      </section> -->
+    </main>
+
+    <script>
+      const filePicker = document.getElementById("filePicker");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const fileList = document.getElementById("fileList");
+      const statusText = document.getElementById("statusText");
+
+      function setStatus(message, isError = false) {
+        statusText.textContent = message;
+        statusText.classList.toggle("error", isError);
+      }
+
+      function toBase64(arrayBuffer) {
+        const bytes = new Uint8Array(arrayBuffer);
+        const chunkSize = 0x8000;
+        let binary = "";
+
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          const chunk = bytes.subarray(i, i + chunkSize);
+          binary += String.fromCharCode(...chunk);
+        }
+
+        return btoa(binary);
+      }
+
+      async function loadFiles() {
+        const response = await fetch("/api/files");
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Could not load files.");
+        }
+
+        fileList.innerHTML = "";
+
+        if (!data.files.length) {
+          const emptyItem = document.createElement("li");
+          emptyItem.className = "file-item";
+          emptyItem.textContent = "No uploaded files yet.";
+          fileList.appendChild(emptyItem);
+          return;
+        }
+
+        data.files.forEach((name) => {
+          const item = document.createElement("li");
+          item.className = "file-item";
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "file-name";
+          nameSpan.textContent = name;
+
+          const actions = document.createElement("div");
+          actions.className = "file-actions";
+
+          const downloadLink = document.createElement("a");
+          downloadLink.className = "btn";
+          downloadLink.href = `/api/download?name=${encodeURIComponent(name)}`;
+          downloadLink.textContent = "Download";
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "btn";
+          deleteBtn.type = "button";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", async () => {
+            const shouldDelete = confirm(`Delete ${name}?`);
+            if (!shouldDelete) {
+              return;
+            }
+
+            const deleteResponse = await fetch(
+              `/api/files/${encodeURIComponent(name)}`,
+              {
+                method: "DELETE",
+              },
+            );
+            const deleteData = await deleteResponse.json();
+
+            if (!deleteResponse.ok) {
+              setStatus(deleteData.error || "Delete failed.", true);
+              return;
+            }
+
+            setStatus(`Deleted ${name}.`);
+            await loadFiles();
+          });
+
+          actions.appendChild(downloadLink);
+          actions.appendChild(deleteBtn);
+          item.appendChild(nameSpan);
+          item.appendChild(actions);
+          fileList.appendChild(item);
+        });
+      }
+
+      uploadBtn.addEventListener("click", async () => {
+        const file = filePicker.files && filePicker.files[0];
+        if (!file) {
+          setStatus("Choose a file to upload.", true);
+          return;
+        }
+
+        try {
+          setStatus("Uploading...");
+          const arrayBuffer = await file.arrayBuffer();
+          const body = {
+            filename: file.name,
+            contentBase64: toBase64(arrayBuffer),
+          };
+
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            setStatus(data.error || "Upload failed.", true);
+            return;
+          }
+
+          filePicker.value = "";
+          setStatus(`Uploaded ${data.fileName}.`);
+          await loadFiles();
+        } catch {
+          setStatus("Unexpected upload error.", true);
+        }
+      });
+
+      loadFiles().catch((err) => {
+        setStatus(err.message || "Failed to initialize file list.", true);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Create Account</h2>
+  <p class="subtitle">Join us today!</p>
+
+  <div class="input-group">
+    <i class="fa-solid fa-user"></i>
+    <input type="text" id="name" placeholder="Full Name" required>
+  </div>
+  
+  <div class="input-group">
+    <i class="fa-solid fa-envelope"></i>
+    <input type="email" id="email" placeholder="Email Address" required>
+  </div>
+
+  <div class="input-group">
+    <i class="fa-solid fa-briefcase"></i>
+    <input type="text" id="role" placeholder="Role (e.g., Backend Developer)" required>
+  </div>
+
+  <div class="input-group">
+    <i class="fa-brands fa-github"></i>
+    <input type="text" id="github" placeholder="GitHub Username" required>
+  </div>
+  
+  <div class="input-group">
+    <i class="fa-solid fa-lock"></i>
+    <input type="password" id="password" placeholder="Password" required>
+  </div>
+  
+  <button id="registerBtn" onclick="register()">
+    <span>Register</span> <i class="fa-solid fa-user-plus"></i>
+  </button>
+
+  <p class="switch-page">Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

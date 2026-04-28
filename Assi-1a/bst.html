@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Ensures proper rendering and touch zooming on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSAL-Assignements</title>
+    <!-- Links the external CSS file -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="content">
+  <div class="doc-wrapper">
+    <h1>Binary Search Tree</h1>
+  </div>
+</header>
+
+
+    <!-- <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav> -->
+
+    <main class = "content">
+        <div class = "doc-wrapper">
+      <section id="Prerequisites">
+        <h2>Prerequisites</h2>
+        <ul>
+          <li>Basic understanding of <strong>Data Structures</strong></li>
+          <li>
+            Knowledge of <strong>Trees</strong> and
+            <strong>Binary Trees</strong>
+          </li>
+          <li>Understanding of <strong>recursion</strong></li>
+          <li>Familiarity with <strong>pointer concepts</strong></li>
+          <li>Basic programming knowledge in <strong>C / C++</strong></li>
+          <li>
+            Understanding of <strong>stack memory and heap memory</strong>
+          </li>
+        </ul>
+      </section>
+
+      <section id="Introduction">
+        <h2>Introduction</h2>
+        <p>
+          A <strong>Binary Search Tree (BST)</strong> is a hierarchical data
+          structure in which each node contains a key value and two child
+          pointers, namely the left child and the right child. The BST follows
+          an important property:
+        </p>
+        <p>
+          For every node in the tree, all values in the left subtree are smaller
+          than the node’s value, and all values in the right subtree are greater
+          than the node’s value.
+        </p>
+        <p>
+          Due to this property, Binary Search Trees allow efficient operations
+          such as
+          <strong>insertion</strong>, <strong>deletion</strong>, and
+          <strong>searching</strong>. BSTs are widely used in applications that
+          require ordered data storage and fast retrieval.
+        </p>
+      </section>
+      <section id="bst-animation">
+        <h2>BST Example Visualization</h2>
+        <video width="600" controls>
+          <source src="video/BST_Animation.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <p>
+          Students can explore interactive Binary Search Tree animations by
+          visiting
+          <a
+            href="https://visualgo.net/en/bst"
+            target="_blank"
+            class="bst-link"
+          >
+            this visualization binary search tree </a
+          >, The above video demonstrates simple inorder traversal operations in
+          a Binary Search Tree.
+        </p>
+      </section>
+      <section id="Explanation">
+    <h2>Explanation of Binary Search Tree Program</h2>
+
+    <p>
+        This section explains the complete flow of the Binary Search Tree (BST) program
+        implemented in <strong>Java</strong>. The explanation is provided step-by-step,
+        starting from data definition to performing various BST operations.
+    </p>
+
+    <!-- STEP 1 -->
+    <h3>Step 1: Defining the Node Structure</h3>
+    <p>
+        Each node of the Binary Search Tree contains three parts:
+        data, reference to the left child, and reference to the right child.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+class Node {
+    int data;          // Value stored in the node
+    Node left, right;  // References to left and right child nodes
+
+    // Constructor to initialize a new node
+    Node(int value) {
+        data = value;
+        left = right = null;
+    }
+}
+    </code></pre>
+    </div>
+
+    <p>
+        The <code>Node</code> class represents a single element of the BST.
+        Initially, both child references are set to <code>null</code>.
+    </p>
+
+    <!-- STEP 2 -->
+    <h3>Step 2: Creating the Binary Search Tree Class</h3>
+    <p>
+        The <code>BinarySearchTree</code> class contains the root node and all
+        the operations performed on the tree.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+class BinarySearchTree {
+    Node root;
+
+    // Constructor
+    BinarySearchTree() {
+        root = null;
+    }
+}
+    </code></pre>
+</div>
+
+    <p>
+        The root node acts as the starting point of the Binary Search Tree.
+        Initially, the tree is empty.
+    </p>
+
+    <!-- STEP 3 -->
+    <h3>Step 3: Inserting a Node (Handling Duplicate Values)</h3>
+    <p>
+        Insertion is performed recursively by comparing the value to be inserted
+        with the current node. Duplicate values are not allowed in the BST.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+Node insert(Node root, int value) {
+
+    // If tree is empty, create a new node
+    if (root == null) {
+        return new Node(value);
+    }
+
+    // If value is smaller, insert in left subtree
+    if (value < root.data) {
+        root.left = insert(root.left, value);
+    }
+    // If value is greater, insert in right subtree
+    else if (value > root.data) {
+        root.right = insert(root.right, value);
+    }
+    // Duplicate values are ignored
+    else {
+        System.out.println("Duplicate value not allowed");
+    }
+
+    return root;
+}
+    </code></pre>
+    </div>
+
+    <p>
+        If the value already exists, the insertion is skipped to avoid duplicates.
+    </p>
+
+    <!-- STEP 4 -->
+    <h3>Step 4: Searching an Element</h3>
+    <p>
+        Searching is done by comparing the key with the current node’s data.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+boolean search(Node root, int key) {
+
+    // Base case: tree is empty or key is found
+    if (root == null) {
+        return false;
+    }
+
+    if (root.data == key) {
+        return true;
+    }
+
+    // Search in left or right subtree
+    if (key < root.data) {
+        return search(root.left, key);
+    } else {
+        return search(root.right, key);
+    }
+}
+    </code></pre>
+    </div>
+    <p>
+        The function returns <code>true</code> if the element is found,
+        otherwise <code>false</code>.
+    </p>
+
+    <!-- STEP 5 -->
+    <h3>Step 5: Tree Traversals</h3>
+    <p>
+        Traversals are used to display the elements of the tree.
+        Inorder traversal prints the BST elements in sorted order.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+void inorder(Node root) {
+    if (root != null) {
+        inorder(root.left);     // Visit left subtree
+        System.out.print(root.data + " ");
+        inorder(root.right);    // Visit right subtree
+    }
+}
+    </code></pre>
+    </div>
+    <!-- STEP 6 -->
+    <h3>Step 6: Finding the Depth (Height) of the Tree</h3>
+    <p>
+        Depth of a tree is the maximum number of nodes from the root to the leaf node.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+int depth(Node root) {
+    if (root == null) {
+        return 0;
+    }
+
+    int leftDepth = depth(root.left);
+    int rightDepth = depth(root.right);
+
+    return Math.max(leftDepth, rightDepth) + 1;
+}
+    </code></pre>
+    </div>
+    <!-- STEP 7 -->
+    <h3>Step 7: Creating Mirror Image of the Tree</h3>
+    <p>
+        In mirror image, left and right child nodes are swapped recursively.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+void mirror(Node root) {
+    if (root == null) {
+        return;
+    }
+
+    Node temp = root.left;
+    root.left = root.right;
+    root.right = temp;
+
+    mirror(root.left);
+    mirror(root.right);
+}
+    </code></pre>
+    </div>
+
+    <!-- STEP 8 -->
+    <h3>Step 8: Level Order Traversal</h3>
+    <p>
+        Level order traversal displays nodes level-by-level using a queue.
+    </p>
+    <div class="code-box">
+    <pre><code class="language-java">
+void levelOrder(Node root) {
+    if (root == null) return;
+
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+
+    while (!q.isEmpty()) {
+        Node current = q.poll();
+        System.out.print(current.data + " ");
+
+        if (current.left != null)
+            q.add(current.left);
+        if (current.right != null)
+            q.add(current.right);
+    }
+}
+    </code></pre>
+    </div>
+    <p>
+        This completes the explanation of the Binary Search Tree implementation
+        and its operations in Java.
+    </p>
+
+</section>
+<section id="Explanation">
+    <h2>Complete Binary Search Tree Program (Java)</h2>
+
+    <p>
+        The following is a complete, menu-driven Java program that implements a
+        Binary Search Tree and performs operations such as insertion, deletion,
+        searching, traversal, depth calculation, and mirror image creation.
+    </p>
+
+    <h3>Complete Java Code</h3>
+    <div class="code-box">
+    <pre><code class="language-java">
+import java.util.*;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int value) {
+        data = value;
+        left = right = null;
+    }
+}
+
+class BinarySearchTree {
+    Node root;
+
+    BinarySearchTree() {
+        root = null;
+    }
+
+    // Insert node (duplicates not allowed)
+    Node insert(Node root, int value) {
+        if (root == null)
+            return new Node(value);
+
+        if (value < root.data)
+            root.left = insert(root.left, value);
+        else if (value > root.data)
+            root.right = insert(root.right, value);
+        else
+            System.out.println("Duplicate value not allowed");
+
+        return root;
+    }
+
+    // Search operation
+    boolean search(Node root, int key) {
+        if (root == null)
+            return false;
+
+        if (root.data == key)
+            return true;
+
+        if (key < root.data)
+            return search(root.left, key);
+        else
+            return search(root.right, key);
+    }
+
+    // Inorder traversal
+    void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
+    }
+
+    // Find minimum value node
+    Node minValueNode(Node root) {
+        Node current = root;
+        while (current.left != null)
+            current = current.left;
+        return current;
+    }
+
+    // Delete operation
+    Node delete(Node root, int key) {
+        if (root == null)
+            return root;
+
+        if (key < root.data)
+            root.left = delete(root.left, key);
+        else if (key > root.data)
+            root.right = delete(root.right, key);
+        else {
+            // Node with one or no child
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+
+            // Node with two children
+            Node temp = minValueNode(root.right);
+            root.data = temp.data;
+            root.right = delete(root.right, temp.data);
+        }
+        return root;
+    }
+
+    // Depth of tree
+    int depth(Node root) {
+        if (root == null)
+            return 0;
+        return Math.max(depth(root.left), depth(root.right)) + 1;
+    }
+
+    // Mirror image
+    void mirror(Node root) {
+        if (root == null)
+            return;
+
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        mirror(root.left);
+        mirror(root.right);
+    }
+
+    // Level order traversal
+    void levelOrder(Node root) {
+        if (root == null)
+            return;
+
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            Node current = q.poll();
+            System.out.print(current.data + " ");
+
+            if (current.left != null)
+                q.add(current.left);
+            if (current.right != null)
+                q.add(current.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+        Scanner sc = new Scanner(System.in);
+        int choice, value;
+
+        do {
+            System.out.println("\n--- Binary Search Tree Menu ---");
+            System.out.println("1. Insert");
+            System.out.println("2. Delete");
+            System.out.println("3. Search");
+            System.out.println("4. Inorder Traversal");
+            System.out.println("5. Depth of Tree");
+            System.out.println("6. Mirror Image");
+            System.out.println("7. Level Order Traversal");
+            System.out.println("0. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to insert: ");
+                    value = sc.nextInt();
+                    bst.root = bst.insert(bst.root, value);
+                    break;
+
+                case 2:
+                    System.out.print("Enter value to delete: ");
+                    value = sc.nextInt();
+                    bst.root = bst.delete(bst.root, value);
+                    break;
+
+                case 3:
+                    System.out.print("Enter value to search: ");
+                    value = sc.nextInt();
+                    if (bst.search(bst.root, value))
+                        System.out.println("Element found");
+                    else
+                        System.out.println("Element not found");
+                    break;
+
+                case 4:
+                    System.out.print("Inorder Traversal: ");
+                    bst.inorder(bst.root);
+                    System.out.println();
+                    break;
+
+                case 5:
+                    System.out.println("Depth of Tree: " + bst.depth(bst.root));
+                    break;
+
+                case 6:
+                    bst.mirror(bst.root);
+                    System.out.println("Mirror image created");
+                    break;
+
+                case 7:
+                    System.out.print("Level Order Traversal: ");
+                    bst.levelOrder(bst.root);
+                    System.out.println();
+                    break;
+            }
+
+        } while (choice != 0);
+
+        sc.close();
+    }
+}
+    </code></pre>
+</div>
+    <h3>Sample Input</h3>
+    <pre>
+1
+50
+1
+30
+1
+70
+1
+20
+1
+40
+4
+3
+40
+5
+7
+0
+    </pre>
+
+    <h3>Sample Output</h3>
+    <pre>
+--- Binary Search Tree Menu ---
+Inorder Traversal: 20 30 40 50 70
+Element found
+Depth of Tree: 3
+Level Order Traversal: 50 30 70 20 40
+    </pre>
+
+    <p>
+        The above input demonstrates insertion, traversal, searching, depth calculation,
+        and level-wise display of the Binary Search Tree.
+    </p>
+</section>
+</div>
+    </main>
+
+    <!-- Optional: Link to a JavaScript file before the closing body tag for better page load speed -->
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>
+
+
+ 

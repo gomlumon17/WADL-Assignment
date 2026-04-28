@@ -1,0 +1,16 @@
+{
+  "name": "static-server",
+  "version": "1.0.0",
+  "description": "Simple Node.js static website server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "http",
+    "static-server"
+  ],
+  "author": "",
+  "license": "MIT"
+}

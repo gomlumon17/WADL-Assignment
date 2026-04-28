@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TrailBlaze Club | jQuery Mobile Demo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+    <div data-role="page" id="home-page" class="site-page" data-theme="a">
+        <div data-role="header" data-position="fixed" class="site-header">
+            <h1>TrailBlaze Club</h1>
+            <a href="register.html" class="ui-btn ui-btn-right ui-mini ui-corner-all ui-btn-inline">Join</a>
+            <div data-role="navbar" class="site-navbar">
+                <ul>
+                    <li><a href="index.html" class="ui-btn-active ui-state-persist" data-transition="fade">Home</a></li>
+                    <li><a href="about.html" data-transition="slide">About</a></li>
+                    <li><a href="register.html" data-transition="slideup">Register</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <section class="hero-card">
+                <p class="eyebrow">Assignment 4A</p>
+                <h2>Weekend Adventure Community</h2>
+                <p>
+                    Discover curated hikes, cycling loops, and campfire meetups.
+                    Built as a mobile-first experience with jQuery Mobile widgets,
+                    smooth page transitions, and touch-friendly forms.
+                </p>
+                <a href="register.html" class="ui-btn ui-btn-b ui-corner-all ui-shadow" data-transition="slideup">Join The Next Trip</a>
+            </section>
+
+            <section>
+                <h3 class="section-title">Upcoming Adventure Highlights</h3>
+                <div class="gallery-grid">
+                    <img src="https://picsum.photos/seed/trail-1/480/360" alt="Mountain trail route">
+                    <img src="https://picsum.photos/seed/trail-2/480/360" alt="Cycling group on a road">
+                    <img src="https://picsum.photos/seed/trail-3/480/360" alt="Forest campsite">
+                    <img src="https://picsum.photos/seed/trail-4/480/360" alt="Sunrise trek">
+                    <img src="https://picsum.photos/seed/trail-5/480/360" alt="Lakeside walk">
+                    <img src="https://picsum.photos/seed/trail-6/480/360" alt="Bonfire evening gathering">
+                </div>
+            </section>
+
+            <section class="feature-panel">
+                <h3 class="section-title">What Members Get</h3>
+                <ul data-role="listview" data-inset="true" data-theme="a">
+                    <li>Monthly outdoor activity calendar and route details</li>
+                    <li>Beginner and intermediate groups for every event</li>
+                    <li>Safety checklist and weather updates before each trip</li>
+                    <li>Instant registration with mobile-friendly forms</li>
+                </ul>
+            </section>
+        </div>
+
+        <div data-role="footer" data-position="fixed" class="site-footer">
+            <h4>WAD - Query Mobile Assignment | <span id="year-home"></span></h4>
+        </div>
+    </div>
+</body>
+</html>

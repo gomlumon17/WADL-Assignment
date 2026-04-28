@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Scheduler using Priority Queue</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="content">
+  <div class="doc-wrapper">
+    <h1>Job Scheduler using Priority Queue (Min Heap)</h1>
+  </div>
+</header>
+
+<main class="content">
+<div class="doc-wrapper">
+
+<section>
+<h2>Problem Statement</h2>
+<p>
+A software company is developing a new job scheduler that efficiently manages
+different processes. The goal is to minimize average waiting time by giving
+priority to shortest time tasks first using a Min Heap (Priority Queue).
+</p>
+</section>
+<section>
+<h2>Concept of Job Scheduling</h2>
+<p>
+Job Scheduling is a technique used by operating systems to decide the order in which
+processes are executed by the CPU. Each process has a certain execution time and the
+scheduler decides which process should run first.
+</p>
+<p>
+To minimize the average waiting time, the <strong>Shortest Job First (SJF)</strong> strategy is used.
+In this assignment, SJF is implemented using a <strong>Min Heap Priority Queue</strong>, where the job
+with the smallest execution time gets the highest priority.
+</p>
+</section>
+<section>
+<h2>Why Priority Queue?</h2>
+<p>
+A Priority Queue stores elements in such a way that the element with the highest
+priority is always removed first.
+</p>
+<ul>
+  <li>Min Heap → Shortest execution time first</li>
+  <li>Max Heap → Longest execution time first</li>
+  <li>Efficient insertion and deletion: O(log n)</li>
+  <li>Efficient retrieval of highest priority job: O(1)</li>
+</ul>
+</section>
+<section id="heap-visualization">
+<h2>Min Heap Visualization</h2>
+<video width="700" controls>
+  <source src="video/Min_Heap_Visualization.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+<p>
+The above video demonstrates how a Min Heap organizes jobs based on execution time.
+The job with the smallest time always appears at the root, ensuring that the shortest
+job is executed first.
+</p>
+</section>
+
+<section>
+<h2>Job Structure</h2>
+<p>
+Represents a process with an ID and execution time.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+class Job {
+    int id;
+    int time;
+
+    Job(int id, int time){
+        this.id = id;
+        this.time = time;
+    }
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Min Heap (Priority Queue)</h2>
+<p>
+Stores jobs in ascending order of execution time. The job with smallest time is executed first.
+</p>
+<p>Smaller execution time → higher priority</p>
+<div class="code-box">
+<pre><code class="language-java">
+PriorityQueue<Job> minHeap = new PriorityQueue<>(
+    (a, b) -> a.time - b.time
+);
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Insert Job</h2>
+<p>
+Inserts a new job into the scheduler.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+void addJob(int id, int time){
+    minHeap.add(new Job(id, time));
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Execute Jobs</h2>
+<p>
+Removes jobs one by one from the priority queue and calculates the average waiting time.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+void executeJobs(){
+    int wait = 0, totalWait = 0, n = minHeap.size();
+
+    while(!minHeap.isEmpty()){
+        Job j = minHeap.poll();
+        System.out.println("Executing Job " + j.id + " Time: " + j.time);
+        totalWait += wait;
+        wait += j.time;
+    }
+
+    System.out.println("Average Waiting Time: " + (float)totalWait / n);
+}
+</code></pre>
+</div>
+</section>
+
+
+<section>
+<h2>Complete Program (With Comments)</h2>
+<p>
+Provides a menu driven interface to insert and execute jobs.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+import java.util.*;
+
+// Job class represents each process
+class Job {
+    int id, time;
+
+    // Constructor
+    Job(int id, int time){
+        this.id = id;
+        this.time = time;
+    }
+}
+
+public class JobScheduler {
+
+    // Min Heap Priority Queue (Shortest Job First)
+    static PriorityQueue<Job> minHeap = new PriorityQueue<>(
+        (a, b) -> a.time - b.time
+    );
+
+    // Add job to scheduler
+    static void addJob(int id, int time){
+        minHeap.add(new Job(id, time));
+    }
+
+    // Execute jobs and calculate average waiting time
+    static void executeJobs(){
+        int wait = 0;        // Waiting time for current job
+        int total = 0;       // Total waiting time
+        int n = minHeap.size();
+
+        while(!minHeap.isEmpty()){
+            Job j = minHeap.poll();           // Get highest priority job
+            System.out.println("Executing Job " + j.id + " Time: " + j.time);
+
+            total += wait;                    // Add waiting time
+            wait += j.time;                  // Increase waiting time
+        }
+
+        System.out.println("Average Waiting Time: " + (float) total / n);
+    }
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int ch, id, t;
+
+        do{
+            System.out.println("\n1.Add Job  2.Execute Jobs  0.Exit");
+            ch = sc.nextInt();
+
+            if(ch == 1){
+                System.out.print("Job ID: ");
+                id = sc.nextInt();
+                System.out.print("Execution Time: ");
+                t = sc.nextInt();
+                addJob(id, t);
+            }
+            else if(ch == 2){
+                executeJobs();
+            }
+
+        }while(ch != 0);
+    }
+}
+</code></pre>
+</div>
+</section>
+<section>
+<h2>Sample Input</h2>
+<pre>
+1
+1
+5
+1
+2
+2
+1
+3
+8
+2
+0
+</pre>
+</section>
+<section>
+<h2>Sample Output</h2>
+<pre>
+1.Add Job  2.Execute Jobs  0.Exit
+Job ID: 1
+Execution Time: 5
+
+1.Add Job  2.Execute Jobs  0.Exit
+Job ID: 2
+Execution Time: 2
+
+1.Add Job  2.Execute Jobs  0.Exit
+Job ID: 3
+Execution Time: 8
+
+1.Add Job  2.Execute Jobs  0.Exit
+Executing Job 2 Time: 2
+Executing Job 1 Time: 5
+Executing Job 3 Time: 8
+Average Waiting Time: 3.0
+</pre>
+</section>
+
+
+</div>
+</main>
+
+</body>
+</html>

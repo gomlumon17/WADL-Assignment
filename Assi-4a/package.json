@@ -1,0 +1,13 @@
+{
+  "name": "pixelnest-gallery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static jQuery Mobile assignment ready for AWS Elastic Beanstalk free tier",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

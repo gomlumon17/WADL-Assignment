@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About | TrailBlaze Club</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+    <div data-role="page" id="about-page" class="site-page" data-theme="a">
+        <div data-role="header" data-position="fixed" class="site-header">
+            <h1>TrailBlaze Club</h1>
+            <div data-role="navbar" class="site-navbar">
+                <ul>
+                    <li><a href="index.html" data-transition="slide" data-direction="reverse">Home</a></li>
+                    <li><a href="about.html" class="ui-btn-active ui-state-persist" data-transition="fade">About</a></li>
+                    <li><a href="register.html" data-transition="slideup">Register</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <section class="hero-card compact">
+                <p class="eyebrow">About This Website</p>
+                <h2>Built For Local Adventure Enthusiasts</h2>
+                <p>
+                    TrailBlaze Club is a concept site for planning outdoor events with a clean,
+                    mobile-first interface, quick navigation, and intuitive touch interactions.
+                </p>
+            </section>
+
+            <div data-role="collapsible-set" data-theme="a" data-content-theme="a">
+                <div data-role="collapsible" data-collapsed="false">
+                    <h3>Objective</h3>
+                    <p>
+                        Present a modern, mobile-ready experience for discovering and joining
+                        weekend adventures using jQuery Mobile structure and widgets.
+                    </p>
+                </div>
+                <div data-role="collapsible">
+                    <h3>Platform Stack</h3>
+                    <ul>
+                        <li>HTML5, jQuery, jQuery Mobile 1.4.5</li>
+                        <li>Custom CSS theme for modern visual design</li>
+                        <li>Desktop and mobile browser testing workflow</li>
+                    </ul>
+                </div>
+                <div data-role="collapsible">
+                    <h3>Useful References</h3>
+                    <p><a href="https://jquerymobile.com/" target="_blank" rel="noopener">jquerymobile.com</a></p>
+                    <p><a href="https://demos.jquerymobile.com/1.4.5/" target="_blank" rel="noopener">jQuery Mobile 1.4.5 demos</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" class="site-footer">
+            <h4>WAD - Query Mobile Assignment | <span id="year-about"></span></h4>
+        </div>
+    </div>
+</body>
+</html>

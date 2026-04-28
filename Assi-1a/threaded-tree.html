@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threaded Binary Tree</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="content">
+  <div class="doc-wrapper">
+    <h1>Threaded Binary Tree (Inorder & Preorder Traversal)</h1>
+  </div>
+</header>
+
+<main class="content">
+<div class="doc-wrapper">
+
+<section>
+<h2>Problem Statement</h2>
+<p>
+Consider a binary tree and implement an In-order Threaded Binary Tree and traverse it
+in In-order and Pre-order without using recursion or stack.
+</p>
+</section>
+
+<section>
+<h2>Concept of Threaded Binary Tree</h2>
+<p>
+In a normal binary tree, many left and right pointers are NULL. During traversal,
+recursion or stack is required to find the next node.
+</p>
+<p>
+A <strong>Threaded Binary Tree</strong> replaces these NULL pointers with special links called
+<strong>threads</strong> which point to the inorder predecessor or successor of the node.
+This allows traversal without recursion or stack.
+</p>
+</section>
+
+<section>
+<h2>Why Threaded Binary Tree?</h2>
+<ul>
+  <li>Eliminates recursion and stack usage</li>
+  <li>Efficient traversal</li>
+  <li>Uses memory effectively</li>
+  <li>Faster inorder and preorder traversal</li>
+</ul>
+</section>
+
+<!-- <section id="tbt-visualization">
+<h2>Threaded Binary Tree Visualization</h2>
+<video width="700" controls>
+  <source src="video/TBT_Visualization.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+<p>
+The above video shows how threads replace NULL pointers and help in inorder traversal.
+</p>
+</section> -->
+
+<section>
+<h2>Node Structure</h2>
+<p>
+Each node contains data, left and right pointers, and two boolean flags indicating
+whether a pointer is a thread or a real child.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+class Node {
+    int data;
+    Node left, right;
+    boolean lthread, rthread;
+
+    Node(int d){
+        data = d;
+        lthread = rthread = true;
+    }
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Insert Operation</h2>
+<p>
+Inserts a node while maintaining the threaded structure.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+Node insert(Node root, int key){
+    if(root == null) return new Node(key);
+
+    if(key < root.data){
+        if(!root.lthread)
+            root.left = insert(root.left, key);
+        else{
+            Node n = new Node(key);
+            n.left = root.left;
+            n.right = root;
+            root.left = n;
+            root.lthread = false;
+        }
+    }
+    else if(key > root.data){
+        if(!root.rthread)
+            root.right = insert(root.right, key);
+        else{
+            Node n = new Node(key);
+            n.right = root.right;
+            n.left = root;
+            root.right = n;
+            root.rthread = false;
+        }
+    }
+    return root;
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Inorder Traversal</h2>
+<p>
+Traverses the tree using threads without recursion or stack.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+void inorder(Node root){
+    Node cur = leftMost(root);
+    while(cur != null){
+        System.out.print(cur.data + " ");
+        if(cur.rthread)
+            cur = cur.right;
+        else
+            cur = leftMost(cur.right);
+    }
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Preorder Traversal</h2>
+<p>
+Traverses the tree using threads without recursion or stack.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+void preorder(Node root){
+    Node cur = root;
+    while(cur != null){
+        System.out.print(cur.data + " ");
+        if(!cur.lthread)
+            cur = cur.left;
+        else if(!cur.rthread)
+            cur = cur.right;
+        else{
+            while(cur != null && cur.rthread)
+                cur = cur.right;
+            if(cur != null)
+                cur = cur.right;
+        }
+    }
+}
+</code></pre>
+</div>
+</section>
+
+<section>
+<h2>Complete Program (With Comments)</h2>
+<p>
+Provides a menu driven interface for insertion and traversal.
+</p>
+<div class="code-box">
+<pre><code class="language-java">
+import java.util.*;
+
+// Threaded Binary Tree Implementation
+class Node {
+    int data;            // Value stored in node
+    Node left, right;    // Left and right pointers
+    boolean lthread;     // True if left pointer is a thread
+    boolean rthread;     // True if right pointer is a thread
+
+    // Constructor
+    Node(int d){
+        data = d;
+        lthread = rthread = true;   // Initially both are threads
+    }
+}
+
+public class ThreadedBinaryTree {
+
+    Node root;   // Root of the tree
+
+    // Insert a node into the threaded binary tree
+    Node insert(Node root, int key){
+        if(root == null) 
+            return new Node(key);   // First node becomes root
+
+        // Insert into left subtree
+        if(key < root.data){
+            if(!root.lthread)               // If left child exists
+                root.left = insert(root.left, key);
+            else{                           // Convert thread to child
+                Node n = new Node(key);
+                n.left = root.left;        // Set predecessor thread
+                n.right = root;            // Set successor thread
+                root.left = n;
+                root.lthread = false;      // Now left is real child
+            }
+        }
+        // Insert into right subtree
+        else if(key > root.data){
+            if(!root.rthread)              // If right child exists
+                root.right = insert(root.right, key);
+            else{                           // Convert thread to child
+                Node n = new Node(key);
+                n.right = root.right;      // Set successor thread
+                n.left = root;             // Set predecessor thread
+                root.right = n;
+                root.rthread = false;      // Now right is real child
+            }
+        }
+        return root;
+    }
+
+    // Find the leftmost node (used in inorder traversal)
+    Node leftMost(Node n){
+        while(n != null && !n.lthread)
+            n = n.left;
+        return n;
+    }
+
+    // Inorder traversal using threads (no recursion / stack)
+    void inorder(){
+        Node cur = leftMost(root);
+        while(cur != null){
+            System.out.print(cur.data + " ");
+            if(cur.rthread)                // Move using thread
+                cur = cur.right;
+            else                           // Move to leftmost of right subtree
+                cur = leftMost(cur.right);
+        }
+    }
+
+    // Preorder traversal using threads
+    void preorder(){
+        Node cur = root;
+        while(cur != null){
+            System.out.print(cur.data + " ");
+            if(!cur.lthread)              // Move to left child
+                cur = cur.left;
+            else if(!cur.rthread)         // Move to right child
+                cur = cur.right;
+            else{
+                // Follow threads to find next right child
+                while(cur != null && cur.rthread)
+                    cur = cur.right;
+                if(cur != null)
+                    cur = cur.right;
+            }
+        }
+    }
+
+    public static void main(String[] args){
+        ThreadedBinaryTree t = new ThreadedBinaryTree();
+        Scanner sc = new Scanner(System.in);
+        int ch, v;
+
+        do{
+            System.out.println("\n1.Insert  2.Inorder  3.Preorder  0.Exit");
+            ch = sc.nextInt();
+
+            if(ch == 1){
+                System.out.print("Enter value: ");
+                v = sc.nextInt();
+                t.root = t.insert(t.root, v);
+            }
+            else if(ch == 2){
+                System.out.print("Inorder: ");
+                t.inorder();
+            }
+            else if(ch == 3){
+                System.out.print("Preorder: ");
+                t.preorder();
+            }
+
+        }while(ch != 0);
+    }
+}
+</code></pre>
+</div>
+</section>
+
+
+<section>
+<h2>Sample Input</h2>
+<pre>
+1
+50
+1
+30
+1
+70
+1
+20
+1
+40
+2
+3
+0
+</pre>
+</section>
+
+<section>
+<h2>Sample Output</h2>
+<pre>
+Inorder: 20 30 40 50 70
+Preorder: 50 30 20 40 70
+</pre>
+</section>
+
+</div>
+</main>
+
+</body>
+</html>
